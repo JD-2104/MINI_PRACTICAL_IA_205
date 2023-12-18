@@ -22,7 +22,7 @@ router.get('/:id', getPatient, (req, res) => {
 router.post('/', async (req, res) => {
   const patient = new patient({
     name: req.body.name,
-    patientToChannel: req.body.patientToChannel
+    patientAtHospital: req.body.patientAtHospital
   })
 
   try {
@@ -37,8 +37,8 @@ router.post('/', async (req, res) => {
 
 // Updating One
 router.patch('/:id', getpatient, async (req, res) => {
-  if (req.body.patientToChannel != null) {
-    res.patient.patientToChannel = req.body.patientToChannel
+  if (req.body.patientAtHospital != null) {
+    res.patient.patientAtHospital = req.body.patientAtHospital
     
   }
 

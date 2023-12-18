@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const subscriber = require('./patient')
+const patient = require('./patient')
 
 // Getting all
 router.get('/', async (req, res) => {
@@ -20,14 +20,14 @@ router.get('/:id', getPatient, (req, res) => {
 
 // Creating one
 router.post('/', async (req, res) => {
-  const subscriber = new subscriber({
+  const patient = new patient({
     name: req.body.name,
-    subscriberToChannel: req.body.subscriberToChannel
+    patientToChannel: req.body.patientToChannel
   })
 
   try {
-    const newsubscriber = await Subscriber.save()
-    res.status(201).json(newsubscriber)
+    const newpatient = await patient.save()
+    res.status(201).json(newpatient)
   } catch (err) {
     res.status(400).json({ message: err.message })
 
@@ -36,15 +36,15 @@ router.post('/', async (req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getSubscriber, async (req, res) => {
-  if (req.body.subscriberToChannel != null) {
-    res.subscriber.subscriberToChannel = req.body.subscriberToChannel
+router.patch('/:id', getpatient, async (req, res) => {
+  if (req.body.patientToChannel != null) {
+    res.patient.patientToChannel = req.body.patientToChannel
     
   }
 
   try {
-    const updatedSubscriber = await res.subscriber.save()
-    res.json(updatedSubscriber)
+    const updatedpatient = await res.patient.save()
+    res.json(updatedpatient)
   } catch (err) {
     res.status(400).json({message: err.message })
   }
@@ -52,10 +52,10 @@ router.patch('/:id', getSubscriber, async (req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getSubscriber, async (req, res) => {
+router.delete('/:id', getPatient, async (req, res) => {
   try {
-    await res.subscriber.remove()
-    res.json({ message: 'Deleted Subscriber '})
+    await res.patient.remove()
+    res.json({ message: 'Deleted patient '})
   } catch (err) {
     res.status(500).json({ message: err.message })
 
@@ -63,19 +63,19 @@ router.delete('/:id', getSubscriber, async (req, res) => {
   
 })
 
-async function getSubscriber(req, res, next) {
-  let subscriber
+async function getpatient(req, res, next) {
+  let patient
   try {
-    subscriber = await Subscriber.findByID(req.params.id)
-    if (subscriber == null) {
-      return res.status(404).json({ message: 'Cannot find subscriber' })
+    patient = await patient.findByID(req.params.id)
+    if (patient == null) {
+      return res.status(404).json({ message: 'Cannot find patient' })
     }
   } catch (err) {
     return res.status(500).json({ message: err.message})
     
   }
 
-  res.subscriber = subscribers
+  res.patient = patients
   next()
 
 }

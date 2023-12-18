@@ -1,0 +1,14 @@
+
+GET http://localhost:3000/patient
+
+###
+
+
+GET http://localhost:3000/patient/15
+
+
+###
+POST http://localhost:3000/patient/15
+Content-Type: application/json
+
+
